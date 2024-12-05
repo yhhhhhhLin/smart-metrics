@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        import-check:
+          enabled: false
+#java -jar xxx.jar --spring.profiles.active=prod

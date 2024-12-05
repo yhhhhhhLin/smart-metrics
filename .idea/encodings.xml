@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/smart-metrics-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-dubbo-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-dubbo-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-gateway/smart-metrics-main-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-gateway/smart-metrics-main-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-model/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-model/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/smart-metrics-datasource/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/smart-metrics-datasource/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/smart-metrics-gpt/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/smart-metrics-gpt/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/smart-metrics-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/smart-metrics-user/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-utils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/smart-metrics-utils/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
