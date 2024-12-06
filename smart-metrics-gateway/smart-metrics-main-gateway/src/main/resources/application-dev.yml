@@ -1,13 +1,14 @@
 spring:
   application:
-    name: smart-metrics-user
+    name: smart-metrics-main-gateway
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yml
   config:
     import:
-      - nacos:smart-metrics-user
+      - nacos:smart-metrics-main-gateway

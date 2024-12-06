@@ -1,9 +1,8 @@
+server:
+  port: 7529
+  servlet:
+    context-path: /user
 spring:
   profiles:
     active: dev
-  cloud:
-    nacos:
-      config:
-        import-check:
-          enabled: false
 #java -jar xxx.jar --spring.profiles.active=prod

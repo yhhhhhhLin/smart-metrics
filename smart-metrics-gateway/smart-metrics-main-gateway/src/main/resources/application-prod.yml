@@ -1,0 +1,12 @@
+server:
+  port: 7529
+spring:
+  application:
+    name: smart-metrics-main-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+      config:
+        server-addr: nacos:8848
+        file-extension: yml

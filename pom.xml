@@ -4,14 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>shop.linyh</groupId>
+    <groupId>xyz.linyh</groupId>
     <artifactId>smart-metrics</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>smart-metrics-service</module>
         <module>smart-metrics-common</module>
-        <module>smart-metrics-model</module>
         <module>smart-metrics-utils</module>
         <module>smart-metrics-gateway</module>
         <module>smart-metrics-dubbo-api</module>
@@ -23,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <spring.boot.version>3.0.2</spring.boot.version>
+        <spring.cloud.version>2022.0.0</spring.cloud.version>
         <com.alibaba.cloud>2022.0.0.0-RC2</com.alibaba.cloud>
         <cloud.gateway>3.1.9</cloud.gateway>
         <cloud.loadbalancer>3.1.9</cloud.loadbalancer>
@@ -140,6 +140,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!--spring cloud alibaba-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -150,11 +159,11 @@
             </dependency>
 
 
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${cloud.gateway}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-gateway</artifactId>-->
+<!--                <version>${cloud.gateway}</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

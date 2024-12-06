@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>shop.linyh</groupId>
+        <groupId>xyz.linyh</groupId>
         <artifactId>smart-metrics</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -15,6 +15,8 @@
         <module>smart-metrics-user</module>
         <module>smart-metrics-gpt</module>
         <module>smart-metrics-datasource</module>
+        <module>smart-metrics-metric</module>
+        <module>smart-metrics-dataselect</module>
     </modules>
 
     <properties>
@@ -25,6 +27,12 @@
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>xyz.linyh</groupId>
+            <artifactId>smart-metrics-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
