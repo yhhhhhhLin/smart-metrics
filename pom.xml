@@ -28,6 +28,7 @@
         <cloud.loadbalancer>3.1.9</cloud.loadbalancer>
         <mysql.version>8.0.23</mysql.version>
         <mybatis.spring.version>3.5.5</mybatis.spring.version>
+        <redis.spring.version>3.3.4</redis.spring.version>
         <dubbo.version>3.3.0</dubbo.version>
         <lombok.version>1.18.30</lombok.version>
         <hutool.version>5.8.26</hutool.version>
@@ -124,6 +125,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis.spring.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.spring.version}</version>
             </dependency>
 
             <!-- fastjson -->
