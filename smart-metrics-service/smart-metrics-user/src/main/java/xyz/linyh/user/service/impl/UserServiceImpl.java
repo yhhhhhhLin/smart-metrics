@@ -10,6 +10,7 @@ import org.springframework.util.DigestUtils;
 import xyz.linyh.common.enums.ErrorCodeEnum;
 import xyz.linyh.common.enums.RegisterTypeEnum;
 import xyz.linyh.common.exception.BusinessException;
+import xyz.linyh.common.utils.JwtUtils;
 import xyz.linyh.user.mapper.UserMapper;
 import xyz.linyh.user.model.dto.LoginDTO;
 import xyz.linyh.user.model.dto.RegisterDTO;
@@ -51,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "账号或密码错误");
         }
 
-        return "token";
+         return JwtUtils.generateToken(user.getId().toString());
     }
 
     @Override

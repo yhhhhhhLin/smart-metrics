@@ -22,8 +22,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public BaseResponse<String> login(@RequestBody LoginDTO dto) {
-        String result = userService.login(dto);
-        return ResultUtils.success(result);
+        String token = userService.login(dto);
+        return ResultUtils.success(token);
     }
 
     @GetMapping("/getMsg")
