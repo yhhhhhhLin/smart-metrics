@@ -6,20 +6,19 @@ import lombok.Data;
  * @author linzz
  */
 @Data
-public class LoginDTO {
+public class RegisterDTO {
+    private String username;
 
-    /**
-     * 账号
-     */
     private String userAccount;
 
-    /**
-     * 密码
-     */
     private String password;
 
+    private Integer registerType;
+
+    private String email;
+
     /**
-     * 邮箱登陆验证码
+     * 邮箱注册验证码
      */
     private Integer code;
 }

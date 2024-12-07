@@ -3,6 +3,7 @@ package xyz.linyh.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.linyh.common.response.BaseResponse;
 import xyz.linyh.user.model.dto.LoginDTO;
+import xyz.linyh.user.model.dto.RegisterDTO;
 import xyz.linyh.user.model.entity.User;
 
 /**
@@ -24,5 +25,12 @@ public interface UserService extends IService<User> {
      * @param email
      * @return
      */
-    BaseResponse<String> getMsg(String email);
+    Boolean getMsg(String email);
+
+    /**
+     * 用户注册
+     * @param dto
+     * @return
+     */
+    Boolean register(RegisterDTO dto);
 }

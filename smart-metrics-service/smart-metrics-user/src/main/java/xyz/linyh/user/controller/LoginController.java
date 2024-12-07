@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.linyh.common.response.BaseResponse;
 import xyz.linyh.common.response.ResultUtils;
 import xyz.linyh.user.model.dto.LoginDTO;
+import xyz.linyh.user.model.dto.RegisterDTO;
 import xyz.linyh.user.service.UserService;
 
 /**
@@ -26,7 +27,16 @@ public class LoginController {
     }
 
     @GetMapping("/getMsg")
-    public BaseResponse<String> getMsg(String email) {
-        return userService.getMsg(email);
+    public BaseResponse<Boolean> getMsg(String email) {
+        Boolean result = userService.getMsg(email);
+        return ResultUtils.success(result);
     }
+
+    @PostMapping("/register")
+    public BaseResponse<Boolean> register(@RequestBody RegisterDTO dto) {
+        Boolean result = userService.register(dto);
+        return ResultUtils.success(result);
+
+    }
+
 }

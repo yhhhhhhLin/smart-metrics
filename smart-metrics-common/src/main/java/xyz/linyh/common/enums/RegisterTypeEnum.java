@@ -4,18 +4,18 @@ package xyz.linyh.common.enums;
  * @author linzz
  */
 
-public enum LoginTypeEnum {
+public enum RegisterTypeEnum {
     ACCOUNT(1),
     EMAIL(2);
 
     private final int code;
 
-    LoginTypeEnum(int code) {
+    RegisterTypeEnum(int code) {
         this.code = code;
     }
 
-    public static LoginTypeEnum fromCode(int code) {
-        for (LoginTypeEnum type : values()) {
+    public static RegisterTypeEnum fromCode(int code) {
+        for (RegisterTypeEnum type : values()) {
             if (type.code == code) {
                 return type;
             }
