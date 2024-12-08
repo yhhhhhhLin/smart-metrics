@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.linyh.datasource.mapper.DscAlertRuleMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.linyh.datasource.model.entity.DscAlertRule">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="dscId" column="dsc_id" jdbcType="BIGINT"/>
+        <result property="ruleName" column="rule_name" jdbcType="VARCHAR"/>
+        <result property="ruleType" column="rule_type" jdbcType="TINYINT"/>
+        <result property="isEnabled" column="is_enabled" jdbcType="TINYINT"/>
+        <result property="notifyChannel" column="notify_channel" jdbcType="TINYINT"/>
+        <result property="notifyRecipients" column="notify_recipients" jdbcType="BIGINT"/>
+        <result property="createdUserId" column="created_user_id" jdbcType="BIGINT"/>
+        <result property="updatedUserId" column="updated_user_id" jdbcType="BIGINT"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,dsc_id,rule_name,
+        rule_type,is_enabled,notify_channel,
+        notify_recipients,created_user_id,updated_user_id,
+        created_time,updated_time,is_deleted
+    </sql>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.linyh.datasource.mapper.DscInfoMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.linyh.datasource.model.entity.DscInfo">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="dscName" column="dsc_name" jdbcType="VARCHAR"/>
+            <result property="dscType" column="dsc_type" jdbcType="TINYINT"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="databaseName" column="database_name" jdbcType="VARCHAR"/>
+            <result property="connectionParams" column="connection_params" jdbcType="OTHER"/>
+            <result property="dscStatus" column="dsc_status" jdbcType="TINYINT"/>
+            <result property="createdUserId" column="created_user_id" jdbcType="BIGINT"/>
+            <result property="updatedBy" column="updated_by" jdbcType="BIGINT"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,dsc_name,dsc_type,
+        url,username,password,
+        database_name,connection_params,dsc_status,
+        created_user_id,updated_by,created_time,
+        updated_time,is_deleted
+    </sql>
+</mapper>

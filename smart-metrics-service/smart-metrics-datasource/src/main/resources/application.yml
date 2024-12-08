@@ -1,0 +1,8 @@
+server:
+  port: 7530
+  servlet:
+    context-path: /dsc
+spring:
+  profiles:
+    active: dev
+#java -jar xxx.jar --spring.profiles.active=prod
