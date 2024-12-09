@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.linyh.common.context.UserIdContext;
+import xyz.linyh.common.utils.JwtUtils;
 
-import static xyz.linyh.common.constant.UserConstant.STAIN_HEADER;
-import static xyz.linyh.common.constant.UserConstant.USER_ID_HEADER;
+import static xyz.linyh.common.constant.UserConstant.*;
 
 /**
  * @author linzz
@@ -26,7 +26,9 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String userId = request.getHeader(USER_ID_HEADER);
+
+        String token = request.getHeader(USER_TOKEN);
+        Long userId = Long.parseLong(JwtUtils.parseToken(token).getSubject());
 
         UserIdContext.setUserId(userId);
         return true;

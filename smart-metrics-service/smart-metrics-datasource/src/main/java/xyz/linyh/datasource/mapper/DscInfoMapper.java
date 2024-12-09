@@ -1,5 +1,6 @@
 package xyz.linyh.datasource.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import xyz.linyh.datasource.model.entity.DscInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2024-12-08 21:28:19
 * @Entity xyz.linyh.datasource.model.entity.DscInfo
 */
+@Mapper
 public interface DscInfoMapper extends BaseMapper<DscInfo> {
 
 }

@@ -1,6 +1,7 @@
 package xyz.linyh.user.controller;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.linyh.user.utils.EmailUtils;
@@ -9,6 +10,7 @@ import xyz.linyh.user.utils.EmailUtils;
  * @author linzz
  */
 @RestController
+@Slf4j
 public class PingController {
 
     @Resource
@@ -16,6 +18,8 @@ public class PingController {
 
     @GetMapping("/ping")
     public void ping2() {
+        log.info("ping2");
+        System.out.println("wjhefioujhwoiejfiowejfoijewifwef");
         System.out.println("ping.....");
     }
 

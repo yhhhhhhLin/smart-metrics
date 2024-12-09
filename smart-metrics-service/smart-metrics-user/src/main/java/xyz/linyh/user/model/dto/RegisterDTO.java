@@ -13,6 +13,8 @@ public class RegisterDTO {
 
     private String password;
 
+    private String checkPassword;
+
     private Integer registerType;
 
     private String email;

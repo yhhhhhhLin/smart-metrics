@@ -5,13 +5,13 @@ package xyz.linyh.common.context;
  */
 public class UserIdContext {
 
-    private static ThreadLocal<String> userIdThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<Long> userIdThreadLocal = new ThreadLocal<>();
 
-    public static void setUserId(String userId) {
+    public static void setUserId(Long userId) {
         userIdThreadLocal.set(userId);
     }
 
-    public static String getUserId() {
+    public static Long getUserId() {
         return userIdThreadLocal.get();
     }
 

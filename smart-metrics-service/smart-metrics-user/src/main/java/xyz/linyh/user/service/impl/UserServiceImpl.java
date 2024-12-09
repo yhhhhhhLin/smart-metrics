@@ -83,8 +83,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private void accountRegister(RegisterDTO dto) {
         String userAccount = dto.getUserAccount();
         String password = dto.getPassword();
+        String checkPassword = dto.getCheckPassword();
 
         validateAccountAndPassword(userAccount, password);
+        if(!password.equals(checkPassword)) {
+            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR,"密码不一致");
+        }
 
         if (isAccountExists(userAccount)) {
             throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "账号已经存在");
@@ -96,8 +100,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private void emailRegister(RegisterDTO dto) {
         String userEmail = dto.getEmail();
         String password = dto.getPassword();
+        String checkPassword = dto.getCheckPassword();
 
         validateAccountAndPassword(userEmail, password);
+        if(!password.equals(checkPassword)) {
+            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR,"密码不一致");
+        }
 
         if (isEmailExists(userEmail)) {
             throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "该邮箱已注册");

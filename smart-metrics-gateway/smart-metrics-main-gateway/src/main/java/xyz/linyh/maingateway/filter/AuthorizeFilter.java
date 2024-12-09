@@ -16,6 +16,7 @@ import xyz.linyh.common.utils.JwtUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static xyz.linyh.common.constant.UserConstant.*;
 
@@ -28,54 +29,51 @@ import static xyz.linyh.common.constant.UserConstant.*;
 @Slf4j
 public class AuthorizeFilter implements Ordered, GlobalFilter {
 
-    static List<String> WHITELIST = new ArrayList<>(Arrays.asList("/user/register", "/user/login"));
-
-
+    // 白名单路径
+    private static final List<Pattern> WHITELIST = Arrays.asList(
+            Pattern.compile("^/user/register$"),
+            Pattern.compile("^/user/login$"),
+            Pattern.compile("^/user/getMsg$")
+    );
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
         ServerHttpResponse response = exchange.getResponse();
 
-//        判断是否是登录页面，注册页面，如果是页面，那么不用鉴权
         String path = exchange.getRequest().getURI().getPath();
         log.info("有新请求，请求地址为：{}-----------------------------------------", path);
-//        如果是白名单的路径，那么可以直接访问
-        if (WHITELIST.contains(path)) {
+
+        // 如果是白名单路径，直接放行
+        if (WHITELIST.stream().anyMatch(pattern -> pattern.matcher(path).matches())) {
             return chain.filter(exchange);
         }
 
-        if (path != null && (path.contains("gpt/connect"))) {
+        if (path != null && path.contains("gpt/connect")) {
             return chain.filter(exchange);
         }
 
-
-//        获取传递的token，然后解析出来保存到session中
+        // 获取请求头中的 Token
         String token = exchange.getRequest().getHeaders().getFirst(USER_TOKEN);
 
-
-        boolean isValidate = JwtUtils.validateToken(token);
-
-        if (!isValidate) {
+        if (token == null || !JwtUtils.validateToken(token)) {
+            log.warn("Token 校验失败");
             return unauthorizedResponse(response);
         }
-        DecodedJWT decodedJWT = JwtUtils.parseToken(token);
+
+        DecodedJWT decodedJWT = null;
+        try {
+            decodedJWT = JwtUtils.parseToken(token);
+        } catch (Exception e) {
+            log.error("Token 解码失败", e);
+            return unauthorizedResponse(response);
+        }
 
         String userId = decodedJWT.getSubject();
         if (userId == null) {
             return unauthorizedResponse(response);
         }
 
-//        将用户id保存到请求头中
-        ServerHttpRequest newRequest = exchange.getRequest().mutate().header(USER_ID_HEADER, userId).build();
-
-//        TODO: 添加固定请求头，后续用来判断是否有经过网关
-        newRequest = exchange.getRequest().mutate().header(STAIN_HEADER, "1").build();
-        log.info("{} id通过了请求token认证", userId);
-
-        exchange.mutate().request(newRequest);
         return chain.filter(exchange);
-
     }
 
     public Mono<Void> unauthorizedResponse(ServerHttpResponse response) {
