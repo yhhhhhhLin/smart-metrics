@@ -26,9 +26,11 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
         String token = request.getHeader(USER_TOKEN);
-        long userId = Long.parseLong(JwtUtils.parseToken(token).getSubject());
+        if(StringUtils.isNotBlank(token)) {
+            long userId = Long.parseLong(JwtUtils.parseToken(token).getSubject());
 
-        UserIdContext.setUserId(userId);
+            UserIdContext.setUserId(userId);
+        }
         return true;
     }
 

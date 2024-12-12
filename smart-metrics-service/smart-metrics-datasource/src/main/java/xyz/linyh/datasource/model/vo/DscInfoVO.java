@@ -1,24 +1,19 @@
-package xyz.linyh.datasource.model.entity;
+package xyz.linyh.datasource.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 数据源表
- *
  * @author linzz
- * @TableName dsc_info
  */
-@TableName(value = "dsc_info")
+
 @Data
-public class DscInfo implements Serializable {
+public class DscInfoVO {
+
     /**
      * 主键ID
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -40,11 +35,6 @@ public class DscInfo implements Serializable {
      * 用户名
      */
     private String username;
-
-    /**
-     * 密码（加密存储）
-     */
-    private String password;
 
     /**
      * 默认数据库名称
@@ -72,9 +62,19 @@ public class DscInfo implements Serializable {
     private Long createdUserId;
 
     /**
+     * 创建人name
+     */
+    private String createdUserName;
+
+    /**
      * 最后更新人ID
      */
     private Long updatedBy;
+
+    /**
+     * 最后更新人name
+     */
+    private Long updatedUserName;
 
     /**
      * 创建时间
@@ -85,13 +85,4 @@ public class DscInfo implements Serializable {
      * 更新时间
      */
     private Date updatedTime;
-
-    /**
-     * 逻辑删除标志（0-未删除，1-已删除）
-     */
-    @TableLogic
-    private Integer isDeleted;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

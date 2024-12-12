@@ -10,6 +10,7 @@ CREATE TABLE dsc_info
     username          VARCHAR(100) COMMENT '用户名',
     password          VARCHAR(256) COMMENT '密码（加密存储）',
     database_name     VARCHAR(100) COMMENT '默认数据库名称',
+    dsc_desc          VARCHAR(255) COMMENT  '数据源描述',
     connection_params JSON COMMENT '其他连接参数（如超时设置）',
     dsc_status        TINYINT COMMENT '数据源状态（0不可用 1可用）',
     created_user_id   BIGINT       NOT NULL COMMENT '创建人ID',

@@ -4,17 +4,20 @@ import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import xyz.linyh.common.enums.ErrorCodeEnum;
 import xyz.linyh.common.enums.RegisterTypeEnum;
+import xyz.linyh.common.enums.UserGenderEnum;
 import xyz.linyh.common.exception.BusinessException;
 import xyz.linyh.common.utils.JwtUtils;
 import xyz.linyh.user.mapper.UserMapper;
 import xyz.linyh.user.model.dto.LoginDTO;
 import xyz.linyh.user.model.dto.RegisterDTO;
 import xyz.linyh.user.model.entity.User;
+import xyz.linyh.user.model.vo.UserInfoVO;
 import xyz.linyh.user.service.UserService;
 import xyz.linyh.user.utils.EmailUtils;
 import xyz.linyh.user.utils.RedisUtil;
@@ -48,11 +51,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         validateAccountAndPassword(userAccount, password);
         User user = lambdaQuery().eq(User::getUserAccount, userAccount)
                 .eq(User::getUserPassword, encryptPassword).one();
-        if(user == null) {
+        if (user == null) {
             throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "账号或密码错误");
         }
 
-         return JwtUtils.generateToken(user.getId().toString());
+        return JwtUtils.generateToken(user.getId().toString());
     }
 
     @Override
@@ -80,14 +83,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return true;
     }
 
+    @Override
+    public UserInfoVO getUserInfo(Long userId) {
+        if (userId == null || userId == 0L){
+            throw new BusinessException(ErrorCodeEnum.NOT_LOGIN_ERROR, "未登录");
+        }
+        User user = getById(userId);
+        UserInfoVO vo = new UserInfoVO();
+        BeanUtils.copyProperties(user,vo);
+        return vo;
+    }
+
     private void accountRegister(RegisterDTO dto) {
         String userAccount = dto.getUserAccount();
         String password = dto.getPassword();
         String checkPassword = dto.getCheckPassword();
 
         validateAccountAndPassword(userAccount, password);
-        if(!password.equals(checkPassword)) {
-            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR,"密码不一致");
+        if (!password.equals(checkPassword)) {
+            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "密码不一致");
         }
 
         if (isAccountExists(userAccount)) {
@@ -103,8 +117,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String checkPassword = dto.getCheckPassword();
 
         validateAccountAndPassword(userEmail, password);
-        if(!password.equals(checkPassword)) {
-            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR,"密码不一致");
+        if (!password.equals(checkPassword)) {
+            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "密码不一致");
         }
 
         if (isEmailExists(userEmail)) {
@@ -145,6 +159,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private void createDefaultUser(String username, String accountOrEmail, String password, RegisterTypeEnum registerTypeEnum) {
         User user = new User();
         user.setUserName(username);
+        user.setGender(UserGenderEnum.UNKNOWN.getCode());
         String encryptPassword = DigestUtils.md5DigestAsHex((PASSWORD_SALT + password).getBytes());
         user.setUserPassword(encryptPassword);
 

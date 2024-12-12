@@ -5,6 +5,7 @@ import xyz.linyh.common.response.BaseResponse;
 import xyz.linyh.user.model.dto.LoginDTO;
 import xyz.linyh.user.model.dto.RegisterDTO;
 import xyz.linyh.user.model.entity.User;
+import xyz.linyh.user.model.vo.UserInfoVO;
 
 /**
 * @author linzz
@@ -33,4 +34,10 @@ public interface UserService extends IService<User> {
      * @return
      */
     Boolean register(RegisterDTO dto);
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    UserInfoVO getUserInfo(Long userId);
 }
