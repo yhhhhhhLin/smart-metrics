@@ -3,6 +3,7 @@ package xyz.linyh.datasource.controller;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import xyz.linyh.common.response.BaseResponse;
+import xyz.linyh.common.response.ResultUtils;
 import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
 import xyz.linyh.datasource.model.dto.AlertRulePageDto;
 import xyz.linyh.datasource.service.DscAlertRuleService;
@@ -21,7 +22,8 @@ public class DscAlertRuleController {
 
     @PostMapping("/add")
     public BaseResponse<Boolean> add(@RequestBody AlertRuleAddOrUpdateDto dto) {
-        return null;
+        Boolean result = dscAlertRuleService.addRule(dto);
+        return ResultUtils.success(result);
     }
 
     @PostMapping("/update")

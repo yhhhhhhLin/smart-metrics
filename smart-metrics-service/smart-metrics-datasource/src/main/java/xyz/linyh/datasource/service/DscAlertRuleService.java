@@ -1,5 +1,6 @@
 package xyz.linyh.datasource.service;
 
+import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
 import xyz.linyh.datasource.model.entity.DscAlertRule;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface DscAlertRuleService extends IService<DscAlertRule> {
 
+    /**
+     * 添加告警数据源告警规则
+     * @param dto
+     * @return
+     */
+    Boolean addRule(AlertRuleAddOrUpdateDto dto);
 }

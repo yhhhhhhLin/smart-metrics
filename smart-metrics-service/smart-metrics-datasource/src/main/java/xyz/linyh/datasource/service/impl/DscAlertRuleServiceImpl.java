@@ -3,6 +3,7 @@ package xyz.linyh.datasource.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import xyz.linyh.datasource.mapper.DscAlertRuleMapper;
+import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
 import xyz.linyh.datasource.model.entity.DscAlertRule;
 import xyz.linyh.datasource.service.DscAlertRuleService;
 
@@ -15,6 +16,11 @@ import xyz.linyh.datasource.service.DscAlertRuleService;
 public class DscAlertRuleServiceImpl extends ServiceImpl<DscAlertRuleMapper, DscAlertRule>
         implements DscAlertRuleService {
 
+    @Override
+    public Boolean addRule(AlertRuleAddOrUpdateDto dto) {
+        Long dscId = dto.getDscId();
+        return null;
+    }
 }
 
 
