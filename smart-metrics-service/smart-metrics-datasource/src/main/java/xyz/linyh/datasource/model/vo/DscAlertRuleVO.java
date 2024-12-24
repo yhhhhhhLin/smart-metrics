@@ -1,20 +1,17 @@
-package xyz.linyh.datasource.model.entity;
+package xyz.linyh.datasource.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 数据源告警规则表
- *
  * @author linzz
- * @TableName dsc_alert_rule
  */
-@TableName(value = "dsc_alert_rule")
 @Data
-public class DscAlertRule implements Serializable {
+public class DscAlertRuleVO {
+
     /**
      * 主键ID
      */
@@ -42,7 +39,7 @@ public class DscAlertRule implements Serializable {
     private Integer isEnabled;
 
     /**
-     * 通知方式 1: 短信 2：邮箱 .... --> AlertMethodEnum
+     * 通知方式 1: 短信 2：邮箱 ....
      */
     private Integer notifyChannel;
 
@@ -57,20 +54,19 @@ public class DscAlertRule implements Serializable {
     private Integer notifyRecipientsType;
 
     /**
-     * 最后告警时间 格式：yyyy-MM-dd
-     */
-    private String alertTime;
-
-    /**
      * 创建人ID
      */
     private Long createdUserId;
+
+    private String createdUserName;
 
 
     /**
      * 最后更新人ID
      */
     private Long updatedUserId;
+
+    private String updatedUserName;
 
     /**
      * 创建时间
@@ -81,13 +77,4 @@ public class DscAlertRule implements Serializable {
      * 更新时间
      */
     private Date updatedTime;
-
-    /**
-     * 逻辑删除标志（0-未删除，1-已删除）
-     */
-    @TableLogic
-    private Integer isDeleted;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

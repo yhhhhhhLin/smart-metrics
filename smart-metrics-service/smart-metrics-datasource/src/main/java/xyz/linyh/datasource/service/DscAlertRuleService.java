@@ -1,8 +1,13 @@
 package xyz.linyh.datasource.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
+import xyz.linyh.datasource.model.dto.AlertRulePageDto;
 import xyz.linyh.datasource.model.entity.DscAlertRule;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.linyh.datasource.model.vo.DscAlertRuleVO;
+
+import java.util.List;
 
 /**
 * @author linzz
@@ -17,4 +22,24 @@ public interface DscAlertRuleService extends IService<DscAlertRule> {
      * @return
      */
     Boolean addRule(AlertRuleAddOrUpdateDto dto);
+
+    /**
+     * page展示所有告警规则
+     * @param dto
+     * @return
+     */
+    Page<DscAlertRuleVO> pageAlertRule(AlertRulePageDto dto);
+
+    /**
+     * 按照alertRuleId获取单个的详细信息
+     * @param alertId
+     * @return
+     */
+    DscAlertRuleVO getOneById(Long alertId);
+
+    /**
+     * 获取所有状态为开启
+     * @return
+     */
+    List<DscAlertRule> listAllEnableAlertRule();
 }

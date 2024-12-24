@@ -1,11 +1,14 @@
 package xyz.linyh.datasource.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import xyz.linyh.common.response.BaseResponse;
 import xyz.linyh.common.response.ResultUtils;
 import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
 import xyz.linyh.datasource.model.dto.AlertRulePageDto;
+import xyz.linyh.datasource.model.entity.DscAlertRule;
+import xyz.linyh.datasource.model.vo.DscAlertRuleVO;
 import xyz.linyh.datasource.service.DscAlertRuleService;
 
 import java.util.List;
@@ -33,17 +36,20 @@ public class DscAlertRuleController {
 
     @GetMapping("/del/{alertId}")
     public BaseResponse<Boolean> del(@PathVariable Long alertId) {
-        return null;
+        boolean result = dscAlertRuleService.removeById(alertId);
+        return ResultUtils.success(result);
     }
 
     @PostMapping("/page")
-    public BaseResponse<List<Object>> page(@RequestBody AlertRulePageDto dto) {
-        return null;
+    public BaseResponse<Page<DscAlertRuleVO>> page(@RequestBody AlertRulePageDto dto) {
+        Page<DscAlertRuleVO> result = dscAlertRuleService.pageAlertRule(dto);
+        return ResultUtils.success(result);
     }
 
     @GetMapping("/{alertId}")
-    public BaseResponse<Object> get(@PathVariable Long alertId) {
-        return null;
+    public BaseResponse<DscAlertRuleVO> get(@PathVariable Long alertId) {
+        DscAlertRuleVO dscAlertRuleVO = dscAlertRuleService.getOneById(alertId);
+        return ResultUtils.success(dscAlertRuleVO);
     }
 
 }

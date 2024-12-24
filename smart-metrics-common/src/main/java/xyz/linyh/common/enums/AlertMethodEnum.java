@@ -3,6 +3,10 @@ package xyz.linyh.common.enums;
 import lombok.Getter;
 import xyz.linyh.common.exception.BusinessException;
 
+/**
+ * @author linzz
+ */
+
 @Getter
 public enum AlertMethodEnum {
 
