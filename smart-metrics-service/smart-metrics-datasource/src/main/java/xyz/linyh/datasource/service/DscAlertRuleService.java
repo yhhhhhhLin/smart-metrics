@@ -1,6 +1,7 @@
 package xyz.linyh.datasource.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import xyz.linyh.common.dto.IdAndStatusDto;
 import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
 import xyz.linyh.datasource.model.dto.AlertRulePageDto;
 import xyz.linyh.datasource.model.entity.DscAlertRule;
@@ -42,4 +43,6 @@ public interface DscAlertRuleService extends IService<DscAlertRule> {
      * @return
      */
     List<DscAlertRule> listAllEnableAlertRule();
+
+    Boolean updateStatus(IdAndStatusDto idAndStatusDto);
 }

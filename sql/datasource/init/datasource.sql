@@ -58,7 +58,7 @@ CREATE TABLE dsc_alert_log
     alert_status      TINYINT COMMENT '告警状态 1：等待 2：通知发送 3：解决',
     error_message     TEXT COMMENT '告警错误信息描述',
     notify_channel    tinyint COMMENT '通知方式 1: 短信 2：邮箱 ....',
-    notify_recipients JSON COMMENT '通知接收者id',
+    notify_recipients BIGINT COMMENT '通知接收者id',
     resolved_at       DATETIME COMMENT '告警解决时间',
     resolved_user_id  BIGINT COMMENT '解决人ID',
     created_time      DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

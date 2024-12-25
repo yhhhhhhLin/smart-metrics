@@ -1,8 +1,13 @@
 package xyz.linyh.datasource.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.linyh.datasource.model.entity.DscAlertLog;
+import xyz.linyh.datasource.model.vo.DscAlertLogVO;
 
 /**
  * @author linzz
@@ -13,6 +18,7 @@ import xyz.linyh.datasource.model.entity.DscAlertLog;
 @Mapper
 public interface DscAlertLogMapper extends BaseMapper<DscAlertLog> {
 
+    IPage<DscAlertLogVO> pageDscAlertLog(Page<DscAlertLog> page, @Param("ew") LambdaQueryWrapper<DscAlertLog> wrapper);
 }
 
 

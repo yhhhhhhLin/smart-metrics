@@ -28,4 +28,28 @@
         resolved_user_id,created_time,updated_time,
         is_deleted
     </sql>
+
+    <select id="pageDscAlertLog" resultType="xyz.linyh.datasource.model.vo.DscAlertLogVO">
+        SELECT
+        dal.*,
+        di.dsc_name,
+        dar.rule_name AS alertRuleName
+        FROM
+        dsc_alert_log dal
+        LEFT JOIN
+        dsc_info di ON dal.dsc_id = di.id
+        LEFT JOIN
+        dsc_alert_rule dar ON dal.alert_rule_id = dar.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+        <if test="page != null">
+            <if test="page.orders != null">
+                ORDER BY
+                <foreach collection="page.orders" item="order" separator=",">
+                    ${order.column} ${order.isAsc ? 'ASC' : 'DESC'}
+                </foreach>
+            </if>
+        </if>
+    </select>
 </mapper>

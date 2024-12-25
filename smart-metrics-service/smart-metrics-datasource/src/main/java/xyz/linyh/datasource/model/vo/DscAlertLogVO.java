@@ -1,23 +1,22 @@
-package xyz.linyh.datasource.model.entity;
+package xyz.linyh.datasource.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
- * 数据源告警日志表
  * @author linzz
- * @TableName dsc_alert_log
  */
-@TableName(value ="dsc_alert_log")
 @Data
-public class DscAlertLog implements Serializable {
+public class DscAlertLogVO {
+
     /**
      * 主键ID
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -26,9 +25,19 @@ public class DscAlertLog implements Serializable {
     private Long alertRuleId;
 
     /**
+     * 告警规则名称
+     */
+    private String alertRuleName;
+
+    /**
      * 数据源ID
      */
     private Long dscId;
+
+    /**
+     * 数据源名称
+     */
+    private String dscName;
 
     /**
      * 告警触发时间
@@ -53,7 +62,12 @@ public class DscAlertLog implements Serializable {
     /**
      * 通知接收者id
      */
-    private Object notifyRecipients;
+    private Long notifyRecipients;
+
+    /**
+     * 告警接收者姓名
+     */
+    private String notifyRecipientsName;
 
     /**
      * 告警解决时间
@@ -66,6 +80,11 @@ public class DscAlertLog implements Serializable {
     private Long resolvedUserId;
 
     /**
+     * 解决人姓名
+     */
+    private String resolvedUserName;
+
+    /**
      * 创建时间
      */
     private Date createdTime;
@@ -74,13 +93,4 @@ public class DscAlertLog implements Serializable {
      * 更新时间
      */
     private Date updatedTime;
-
-    /**
-     * 逻辑删除标志（0-未删除，1-已删除）
-     */
-    @TableLogic
-    private Integer isDeleted;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

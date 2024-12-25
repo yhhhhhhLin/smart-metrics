@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import xyz.linyh.common.constant.CommonConstant;
 import xyz.linyh.common.context.UserIdContext;
+import xyz.linyh.common.dto.IdAndStatusDto;
 import xyz.linyh.common.enums.ErrorCodeEnum;
 import xyz.linyh.common.exception.BusinessException;
 import xyz.linyh.datasource.mapper.DscAlertRuleMapper;
@@ -122,6 +123,20 @@ public class DscAlertRuleServiceImpl extends ServiceImpl<DscAlertRuleMapper, Dsc
     public List<DscAlertRule> listAllEnableAlertRule() {
         return lambdaQuery().eq(DscAlertRule::getIsEnabled, CommonConstant.STATUS_ENABLED)
                 .list();
+    }
+
+    @Override
+    public Boolean updateStatus(IdAndStatusDto idAndStatusDto) {
+        Long id = idAndStatusDto.getId();
+        Integer status = idAndStatusDto.getStatus();
+        if (id == null || status == null || status != 0 && status != 1) {
+            throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR);
+        }
+
+        return lambdaUpdate()
+                .eq(DscAlertRule::getId, idAndStatusDto)
+                .set(DscAlertRule::getIsEnabled, status)
+                .update();
     }
 }
 

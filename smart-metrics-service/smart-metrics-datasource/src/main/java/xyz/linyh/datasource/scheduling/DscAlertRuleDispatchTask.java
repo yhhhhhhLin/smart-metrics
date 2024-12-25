@@ -9,8 +9,10 @@ import xyz.linyh.datasource.factory.DatasourceClientFactory;
 import xyz.linyh.datasource.factory.NotificationClientFactory;
 import xyz.linyh.datasource.model.entity.DscAlertRule;
 import xyz.linyh.datasource.model.entity.DscInfo;
+import xyz.linyh.datasource.service.DscAlertLogService;
 import xyz.linyh.datasource.service.DscAlertRuleService;
 import xyz.linyh.datasource.service.DscInfoService;
+import xyz.linyh.datasource.utils.RedisUtil;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +36,12 @@ public class DscAlertRuleDispatchTask {
     @Resource
     private DscInfoService dscInfoService;
 
+    @Resource
+    private DscAlertLogService dscAlertLogService;
+
+    @Resource
+    private RedisUtil redisUtil;
+
     @Resource(name = "dscAlertRuleCheckTaskExecutor")
     private ThreadPoolExecutor dscAlertRuleCheckTaskExecutor;
 
@@ -42,6 +50,9 @@ public class DscAlertRuleDispatchTask {
      */
     @Scheduled(cron = "0 */1 * * * ?")
     public void dscAlertRuleTask() {
+//        RedisScript
+//        redisUtil
+
         // 找出所有配置了告警，并且status是开启状态的所有数据源规则
         List<DscAlertRule> dscAlertRules = dscAlertRuleService.listAllEnableAlertRule();
         if (dscAlertRules == null || dscAlertRules.isEmpty()) {
@@ -100,5 +111,8 @@ public class DscAlertRuleDispatchTask {
         String message = String.format("数据源 [%s] (ID: %d) 无法连接，规则 [%s] 已触发告警！",
                 dscInfo.getDscName(), dscInfo.getId(), alertRule.getRuleName());
         notificationClient.send(null, alertRule.getNotifyRecipients(), message);
+
+//        添加告警日志记录
+        dscAlertLogService.addAlertLog(alertRule, dscInfo, message);
     }
 }

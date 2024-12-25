@@ -3,15 +3,13 @@ package xyz.linyh.datasource.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+import xyz.linyh.common.dto.IdAndStatusDto;
 import xyz.linyh.common.response.BaseResponse;
 import xyz.linyh.common.response.ResultUtils;
 import xyz.linyh.datasource.model.dto.AlertRuleAddOrUpdateDto;
 import xyz.linyh.datasource.model.dto.AlertRulePageDto;
-import xyz.linyh.datasource.model.entity.DscAlertRule;
 import xyz.linyh.datasource.model.vo.DscAlertRuleVO;
 import xyz.linyh.datasource.service.DscAlertRuleService;
-
-import java.util.List;
 
 /**
  * @author linzz
@@ -32,6 +30,12 @@ public class DscAlertRuleController {
     @PostMapping("/update")
     public BaseResponse<Boolean> update(@RequestBody AlertRuleAddOrUpdateDto dto) {
         return null;
+    }
+
+    @PostMapping("/status")
+    public BaseResponse<Boolean> updateStatus(@RequestBody IdAndStatusDto idAndStatusDto) {
+        Boolean result = dscAlertRuleService.updateStatus(idAndStatusDto);
+        return ResultUtils.success(result);
     }
 
     @GetMapping("/del/{alertId}")
