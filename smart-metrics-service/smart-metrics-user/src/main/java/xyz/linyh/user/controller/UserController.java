@@ -15,6 +15,7 @@ import xyz.linyh.user.model.vo.UserInfoVO;
 import xyz.linyh.user.service.UserService;
 
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * @author linzz
@@ -51,6 +52,11 @@ public class UserController {
         UserInfoVO userinfo = userService.getUserInfo(UserIdContext.getUserId());
         return ResultUtils.success(userinfo);
 
+    }
+
+    @GetMapping("/usernames")
+    public BaseResponse<Map<Long,String>> listUserIdAndNameMap(String username){
+        return ResultUtils.success(userService.listUserIdAndNameMap(username));
     }
 
 }

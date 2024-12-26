@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import xyz.linyh.common.context.UserIdContext;
 import xyz.linyh.common.utils.JwtUtils;
 
+import java.util.List;
+
 import static xyz.linyh.common.constant.UserConstant.*;
 
 /**
@@ -16,6 +18,8 @@ import static xyz.linyh.common.constant.UserConstant.*;
  */
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
+
+    private List<String> LOGIN_WHITE_LIST = List.of("/user/login", "/user/register");
 
 
     @Override
@@ -27,6 +31,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
 
+//        如果是免登陆接口直接跳过
+        String uri = request.getRequestURI();
+        if(LOGIN_WHITE_LIST.contains(uri)){
+            return true;
+        }
         String token = request.getHeader(USER_TOKEN);
 
         if(StringUtils.isNotBlank(token)) {

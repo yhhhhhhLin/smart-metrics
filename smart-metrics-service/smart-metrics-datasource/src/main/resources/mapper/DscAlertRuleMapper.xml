@@ -26,4 +26,16 @@
         notify_recipients,created_user_id,updated_user_id,
         created_time,updated_time,is_deleted
     </sql>
+    <select id="pageDscAlertRule" resultType="xyz.linyh.datasource.model.vo.DscAlertRuleVO">
+        SELECT
+        dar.*,
+        di.dsc_name as dsc_name
+        FROM
+        dsc_alert_rule dar
+        LEFT JOIN
+        dsc_info di ON dar.dsc_id = di.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
 </mapper>

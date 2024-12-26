@@ -1,6 +1,9 @@
 package xyz.linyh.datasource.scheduling;
 
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.AES;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import xyz.linyh.datasource.client.DatasourceClient;
@@ -12,10 +15,12 @@ import xyz.linyh.datasource.model.entity.DscInfo;
 import xyz.linyh.datasource.service.DscAlertLogService;
 import xyz.linyh.datasource.service.DscAlertRuleService;
 import xyz.linyh.datasource.service.DscInfoService;
+import xyz.linyh.datasource.service.impl.DscInfoServiceImpl;
 import xyz.linyh.datasource.utils.RedisUtil;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -28,6 +33,7 @@ import java.util.stream.Collectors;
  * @author linzz
  */
 @Component
+@Slf4j
 public class DscAlertRuleDispatchTask {
 
     @Resource
@@ -70,9 +76,11 @@ public class DscAlertRuleDispatchTask {
         dscIdAndDscInfoMap.forEach((dscId, dscInfo) ->
                 dscAlertRuleCheckTaskExecutor.submit(() -> {
                     Boolean isConnected = checkDscConnect(dscInfo);
+                    DscAlertRule alertRule= dscIdAndAlertRuleMap.get(dscId);
                     if (!isConnected) {
-                        DscAlertRule alertRule = dscIdAndAlertRuleMap.get(dscId);
                         sendAlert(alertRule, dscInfo);
+                    }else{
+                        log.info("告警规则 {} 检查完毕，没有错误",alertRule);
                     }
                 })
         );
@@ -82,13 +90,20 @@ public class DscAlertRuleDispatchTask {
      * 检查数据源是否可连接
      */
     private Boolean checkDscConnect(DscInfo dscInfo) {
+        AES aes = SecureUtil.aes(DscInfoServiceImpl.DSC_PASSWORD_SLAT.getBytes());
+        String password = Arrays.toString(aes.decrypt(dscInfo.getPassword()));
         DatasourceClient client = DatasourceClientFactory.getClient(
                 dscInfo.getDscType(),
                 dscInfo.getUrl(),
                 dscInfo.getUsername(),
-                dscInfo.getPassword()
+                password
         );
-        return client.testConnection();
+        try {
+            return client.testConnection();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return false;
+        }
     }
 
     /**
@@ -114,5 +129,8 @@ public class DscAlertRuleDispatchTask {
 
 //        添加告警日志记录
         dscAlertLogService.addAlertLog(alertRule, dscInfo, message);
+        dscAlertRuleService.addAlertTime(alertRule.getId());
+
+        log.error("告警规则 {} 出现异常",alertRule);
     }
 }

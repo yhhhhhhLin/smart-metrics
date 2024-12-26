@@ -9,6 +9,7 @@ import xyz.linyh.datasource.client.DatasourceClient;
 import xyz.linyh.datasource.factory.DatasourceClientFactory;
 import xyz.linyh.datasource.model.dto.DscAddOrUpdateDto;
 import xyz.linyh.datasource.model.dto.DscQueryDto;
+import xyz.linyh.datasource.model.entity.DscInfo;
 import xyz.linyh.datasource.model.vo.DscInfoVO;
 import xyz.linyh.datasource.service.DscInfoService;
 
@@ -30,8 +31,14 @@ public class DscController {
         return ResultUtils.success(result);
     }
 
-    @GetMapping("/page")
-    public BaseResponse<Page<DscInfoVO>> page(DscQueryDto dto) {
+    @PostMapping("/list")
+    public BaseResponse<List<DscInfoVO>> list(@RequestBody DscQueryDto dto) {
+        List<DscInfoVO> result = dscInfoService.listDscInfo(dto);
+        return ResultUtils.success(result);
+    }
+
+    @PostMapping("/page")
+    public BaseResponse<Page<DscInfoVO>> page(@RequestBody DscQueryDto dto) {
         Page<DscInfoVO> result = dscInfoService.pageDscInfo(dto);
         return ResultUtils.success(result);
     }

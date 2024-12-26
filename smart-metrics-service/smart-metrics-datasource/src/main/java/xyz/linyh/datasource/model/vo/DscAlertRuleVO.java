@@ -2,6 +2,7 @@ package xyz.linyh.datasource.model.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -22,6 +23,11 @@ public class DscAlertRuleVO {
      * 数据源ID
      */
     private Long dscId;
+
+    /**
+     * 数据源名称
+     */
+    private String dscName;
 
     /**
      * 规则名称
@@ -49,6 +55,11 @@ public class DscAlertRuleVO {
     private Long notifyRecipients;
 
     /**
+     * 通知接收者姓名
+     */
+    private String notifyRecipientName;
+
+    /**
      * 告警接收者方式 1：告警创建人，2：数据源创建人，3：其他
      */
     private Integer notifyRecipientsType;
@@ -71,6 +82,7 @@ public class DscAlertRuleVO {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm")
     private Date createdTime;
 
     /**

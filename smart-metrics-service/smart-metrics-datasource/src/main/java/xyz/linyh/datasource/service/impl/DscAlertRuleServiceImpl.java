@@ -1,9 +1,12 @@
 package xyz.linyh.datasource.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import xyz.linyh.common.constant.CommonConstant;
@@ -20,8 +23,11 @@ import xyz.linyh.datasource.model.vo.DscAlertRuleVO;
 import xyz.linyh.datasource.service.DscAlertRuleService;
 import xyz.linyh.datasource.service.DscInfoService;
 import xyz.linyh.datasource.utils.PageResultUtil;
+import xyz.linyh.dubbo.service.DubboUserService;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author linzz
@@ -34,6 +40,12 @@ public class DscAlertRuleServiceImpl extends ServiceImpl<DscAlertRuleMapper, Dsc
 
     @Resource
     private DscInfoService dscInfoService;
+
+    @Resource
+    private DscAlertRuleMapper dscAlertRuleMapper;
+
+    @DubboReference
+    private DubboUserService dubboUserService;
 
     @Override
     public Boolean addRule(AlertRuleAddOrUpdateDto dto) {
@@ -71,9 +83,9 @@ public class DscAlertRuleServiceImpl extends ServiceImpl<DscAlertRuleMapper, Dsc
                 throw new BusinessException(ErrorCodeEnum.PARAMS_ERROR, "当前告警接受方式无效");
         }
         dscAlertRule.setDscId(dto.getDscId());
-        dscAlertRule.setRuleName(dscAlertRule.getRuleName());
-        dscAlertRule.setRuleType(dscAlertRule.getRuleType());
-        dscAlertRule.setNotifyChannel(dscAlertRule.getNotifyChannel());
+        dscAlertRule.setRuleName(dto.getRuleName());
+        dscAlertRule.setRuleType(dto.getRuleType());
+        dscAlertRule.setNotifyChannel(dto.getNotifyChannel());
         dscAlertRule.setCreatedUserId(alertRuleCreateUserId);
         dscAlertRule.setUpdatedUserId(alertRuleCreateUserId);
 
@@ -82,21 +94,24 @@ public class DscAlertRuleServiceImpl extends ServiceImpl<DscAlertRuleMapper, Dsc
 
     @Override
     public Page<DscAlertRuleVO> pageAlertRule(AlertRulePageDto dto) {
-        Page<DscAlertRule> dscAlertRulePage = lambdaQuery()
-                .like(StrUtil.isNotBlank(dto.getAlertRuleName()), DscAlertRule::getRuleName, dto.getAlertRuleName())
-                .page(new Page<>(dto.getCurrentPage(), dto.getPageSize()));
+        LambdaQueryWrapper<DscAlertRule> wrapper = new LambdaQueryWrapper<DscAlertRule>()
+                .like(StrUtil.isNotBlank(dto.getAlertRuleName()), DscAlertRule::getRuleName, dto.getAlertRuleName());
+        Page<DscAlertRule> page = new Page<>(dto.getCurrentPage(), dto.getPageSize());
+        IPage<DscAlertRuleVO> dscAlertRuleVoPage = dscAlertRuleMapper.pageDscAlertRule(page, wrapper);
 
-        return PageResultUtil.transfer(dscAlertRulePage, dscAlertRule -> {
+        return PageResultUtil.transfer(dscAlertRuleVoPage, dscAlertRule -> {
+
+
+            DscAlertRuleVO dscAlertRuleVO = new DscAlertRuleVO();
+            BeanUtils.copyProperties(dscAlertRule, dscAlertRuleVO);
 
             Long createdUserId = dscAlertRule.getCreatedUserId();
             Long updatedByUserId = dscAlertRule.getUpdatedUserId();
-
-            DscAlertRuleVO dscAlertRuleVO = new DscAlertRuleVO();
-//            TODO:
-//            dscAlertRuleVO.setCreatedUserName();
-//            dscAlertRuleVO.setUpdatedUserName();
-
-            BeanUtils.copyProperties(dscAlertRule, dscAlertRuleVO);
+            Long notifyRecipients = dscAlertRule.getNotifyRecipients();
+            Map<Long, String> userIdNameMap = dubboUserService.getUserNameByIds(List.of(createdUserId, updatedByUserId, notifyRecipients));
+            dscAlertRuleVO.setCreatedUserName(userIdNameMap.get(createdUserId));
+            dscAlertRuleVO.setUpdatedUserName(userIdNameMap.get(updatedByUserId));
+            dscAlertRuleVO.setNotifyRecipientName(userIdNameMap.get(notifyRecipients));
             return dscAlertRuleVO;
         });
 
@@ -134,9 +149,17 @@ public class DscAlertRuleServiceImpl extends ServiceImpl<DscAlertRuleMapper, Dsc
         }
 
         return lambdaUpdate()
-                .eq(DscAlertRule::getId, idAndStatusDto)
+                .eq(DscAlertRule::getId, id)
                 .set(DscAlertRule::getIsEnabled, status)
                 .update();
+    }
+
+    @Override
+    public void addAlertTime(Long id) {
+        lambdaUpdate().eq(DscAlertRule::getId, id)
+                .set(DscAlertRule::getAlertTime, new Date())
+                .update();
+
     }
 }
 

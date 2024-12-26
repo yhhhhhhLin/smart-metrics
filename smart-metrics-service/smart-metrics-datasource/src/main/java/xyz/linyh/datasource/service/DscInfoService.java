@@ -7,6 +7,8 @@ import xyz.linyh.datasource.model.dto.DscQueryDto;
 import xyz.linyh.datasource.model.entity.DscInfo;
 import xyz.linyh.datasource.model.vo.DscInfoVO;
 
+import java.util.List;
+
 /**
  * @author linzz
  */
@@ -24,4 +26,11 @@ public interface DscInfoService extends IService<DscInfo> {
     DscInfoVO getOneDscInfo(Long dscId);
 
     Boolean updateDscInfo(DscAddOrUpdateDto dto);
+
+    /**
+     * 获取所有数据源，可条件查询
+     * @param dto
+     * @return
+     */
+    List<DscInfoVO> listDscInfo(DscQueryDto dto);
 }

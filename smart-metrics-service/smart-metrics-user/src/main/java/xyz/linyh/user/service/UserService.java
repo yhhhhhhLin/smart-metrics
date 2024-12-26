@@ -7,6 +7,8 @@ import xyz.linyh.user.model.dto.RegisterDTO;
 import xyz.linyh.user.model.entity.User;
 import xyz.linyh.user.model.vo.UserInfoVO;
 
+import java.util.Map;
+
 /**
 * @author linzz
 * @description 针对表【user(用户表)】的数据库操作Service
@@ -40,4 +42,10 @@ public interface UserService extends IService<User> {
      * @return
      */
     UserInfoVO getUserInfo(Long userId);
+
+    /**
+     * 获取所有用户id-用户名map
+     * @return
+     */
+    Map<Long, String> listUserIdAndNameMap(String username);
 }

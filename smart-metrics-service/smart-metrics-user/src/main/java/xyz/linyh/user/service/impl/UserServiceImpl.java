@@ -22,7 +22,10 @@ import xyz.linyh.user.service.UserService;
 import xyz.linyh.user.utils.EmailUtils;
 import xyz.linyh.user.utils.RedisUtil;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @description 用户Service实现类
@@ -85,13 +88,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserInfoVO getUserInfo(Long userId) {
-        if (userId == null || userId == 0L){
+        if (userId == null || userId == 0L) {
             throw new BusinessException(ErrorCodeEnum.NOT_LOGIN_ERROR, "未登录");
         }
         User user = getById(userId);
         UserInfoVO vo = new UserInfoVO();
-        BeanUtils.copyProperties(user,vo);
+        BeanUtils.copyProperties(user, vo);
         return vo;
+    }
+
+    @Override
+    public Map<Long, String> listUserIdAndNameMap(String username) {
+        List<User> users = lambdaQuery().eq(StringUtils.isNotBlank(username), User::getUserName, username)
+                .list();
+        return users.stream().collect(Collectors.toMap(User::getId, User::getUserName));
     }
 
     private void accountRegister(RegisterDTO dto) {

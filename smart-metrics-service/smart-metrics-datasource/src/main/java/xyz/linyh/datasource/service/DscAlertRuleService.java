@@ -45,4 +45,6 @@ public interface DscAlertRuleService extends IService<DscAlertRule> {
     List<DscAlertRule> listAllEnableAlertRule();
 
     Boolean updateStatus(IdAndStatusDto idAndStatusDto);
+
+    void addAlertTime(Long id);
 }

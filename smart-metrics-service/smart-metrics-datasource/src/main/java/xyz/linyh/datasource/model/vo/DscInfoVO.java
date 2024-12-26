@@ -1,5 +1,6 @@
 package xyz.linyh.datasource.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -74,15 +75,17 @@ public class DscInfoVO {
     /**
      * 最后更新人name
      */
-    private Long updatedUserName;
+    private String updatedUserName;
 
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm")
     private Date createdTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm")
     private Date updatedTime;
 }
